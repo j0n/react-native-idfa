@@ -34,6 +34,9 @@ RCT_EXPORT_METHOD(getIDFA:(RCTPromiseResolveBlock)resolve
 
 - (BOOL) isAdvertisingTrackingEnabled {
     if (@available(iOS 14, *)) {
+        if ([ATTrackingManager trackingAuthorizationStatus] == ATTrackingManagerAuthorizationStatusNotDetermined) {
+            return true;
+        }
         return [ATTrackingManager trackingAuthorizationStatus] == ATTrackingManagerAuthorizationStatusAuthorized;
     } else {
         return [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled];
